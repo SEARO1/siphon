@@ -236,7 +236,7 @@ def _build_agent_session(
         },
         "interruption": {
             "enabled": allow_interruptions,
-            "mode": "adaptive",
+            "mode": "realtime",
             "discard_audio_if_uninterruptible": False,
             "min_duration": min_interruption_duration,
         },
@@ -342,8 +342,8 @@ async def entrypoint(
     min_silence_duration = kwargs.get("min_silence_duration", 0.5)
     activation_threshold = kwargs.get("activation_threshold", 0.5)
     prefix_padding_duration = kwargs.get("prefix_padding_duration", 0.3)
-    min_endpointing_delay = kwargs.get("min_endpointing_delay", 0.2)
-    max_endpointing_delay = kwargs.get("max_endpointing_delay", 0.6)
+    min_endpointing_delay = kwargs.get("min_endpointing_delay", 0.1)
+    max_endpointing_delay = kwargs.get("max_endpointing_delay", 0.35)
     min_interruption_duration = kwargs.get("min_interruption_duration", 0.3)
     preemptive_generation = kwargs.get("preemptive_generation", True)
     tools = kwargs.get("tools", None)

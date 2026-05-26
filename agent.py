@@ -22,7 +22,8 @@ agent = Agent(
     llm=llm_model,  
     stt=stt_model,
     tts=tts_model,
-    system_prompt="You are a helpful and professional enterprise AI receptionist. Keep your answers brief and conversational."
+    system_prompt="You are a helpful and professional enterprise AI receptionist. Keep your answers brief and conversational.",
+    allow_interruptions=False
 )
 
 if __name__ == "__main__":
