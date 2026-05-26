@@ -7,11 +7,10 @@ load_dotenv()
 
 # Instantiate your models
 llm_model = azure_openai.LLM(
-    model="gpt-4o-mini",
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    azure_endpoint="https://veserveazureai.openai.azure.com",
-    azure_deployment="gpt-4o-mini",
-    api_version="2024-10-21",
+    azure_endpoint=os.getenv("AZURE_OPENAI_BASE_URL"),
+    azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
 )
 stt_model = deepgram.STT()
 tts_model = cartesia.TTS(voice="f786b574-daa5-4673-aa0c-cbe3e8534c02")
