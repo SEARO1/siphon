@@ -13,6 +13,7 @@ from siphon.agent.agent_components.stt import get_stt_component
 from siphon.agent.agent_components.tts import get_tts_component
 from .utils import resolve_component
 from siphon.config import get_logger, _redact_phone
+from siphon.config.api_logger import APILatencyLogger
 
 logger = get_logger("calling-agent")
 
@@ -431,6 +432,13 @@ async def entrypoint(
             preemptive_generation=preemptive_generation,
         )
 
+        # ------------------------------------------------------------------
+        # API Latency Logger – attach BEFORE session.start() so no events
+        # are missed; prints STT / LLM / TTS latency lines to the terminal.
+        # ------------------------------------------------------------------
+        api_latency_logger = APILatencyLogger(print_summary_every=10)
+        api_latency_logger.attach(session)
+
         await session.start(
             room=ctx.room,
             agent=agent_setup,
@@ -502,6 +510,7 @@ async def entrypoint(
 
         call_result = await monitor_call(ctx, agent_setup)
         logger.info("Call result: %s", call_result)
+        api_latency_logger.print_summary()
 
     except Exception:
         logger.exception("Error in entrypoint")
